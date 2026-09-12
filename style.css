@@ -1753,13 +1753,9 @@ footer .logo-text {
   height: 45px;
   z-index: 9999;
   pointer-events: none;
-
   opacity: 0;
   transform: translateY(12px) scale(0.8);
-  transition:
-    opacity 0.2s ease,
-    transform 0.25s ease;
-
+  transition: opacity 0.2s ease, transform 0.25s ease;
   display: none;
 }
 
@@ -1768,7 +1764,7 @@ footer .logo-text {
   position: absolute;
   width: 11px;
   height: 11px;
-  border: 2px solid #172554;
+  border: 2px solid #F04405;
   border-radius: 50%;
   background: #fff;
   left: 9px;
@@ -1780,7 +1776,7 @@ footer .logo-text {
   position: absolute;
   width: 2px;
   height: 17px;
-  background: #172554;
+  background: #F04405;
   left: 14px;
   top: 12px;
   border-radius: 2px;
@@ -1791,7 +1787,7 @@ footer .logo-text {
   position: absolute;
   width: 13px;
   height: 2px;
-  background: #172554;
+  background: #F04405;
   top: 16px;
   border-radius: 2px;
   transform-origin: left center;
@@ -1812,7 +1808,7 @@ footer .logo-text {
   position: absolute;
   width: 14px;
   height: 2px;
-  background: #172554;
+  background: #F04405;
   top: 28px;
   border-radius: 2px;
   transform-origin: left center;
@@ -1828,7 +1824,7 @@ footer .logo-text {
   transform: rotate(55deg);
 }
 
-/* Wave animation */
+/* Animation */
 @keyframes helperWave {
   from {
     transform: rotate(-55deg);
@@ -1866,6 +1862,7 @@ footer .logo-text {
     animation: none;
   }
 }
+
 
 
 
