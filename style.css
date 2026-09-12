@@ -1674,4 +1674,69 @@ textarea:focus-visible,
     max-width: 280px;
   }
 }
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #111;
+  flex-shrink: 0;
+}
+
+.logo-icon {
+  width: 85px;
+  height: 32px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+  color: #111;
+}
+
+.logo-text span {
+  margin-top: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #666;
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .logo {
+    gap: 7px;
+  }
+
+  .logo-icon {
+    width: 65px;
+    height: 28px;
+  }
+
+  .logo-text {
+    font-size: 15px;
+  }
+
+  .logo-text span {
+    font-size: 9px;
+  }
+
+}
+
 
