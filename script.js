@@ -318,7 +318,7 @@
         }
       });
     });
-     /* ---------- Cute stick-man button helper ---------- */
+    /* ---------- Cute stick-man button helper ---------- */
 
 var cuteHelper = document.querySelector(".cute-helper");
 
@@ -327,23 +327,45 @@ if (cuteHelper) {
     "button, .btn, .social-link"
   );
 
+  var helperTimer;
+
+  function showCuteHelper(button) {
+    var rect = button.getBoundingClientRect();
+
+    cuteHelper.style.left =
+      rect.left + rect.width / 2 - 15 + "px";
+
+    cuteHelper.style.top =
+      rect.top - 48 + "px";
+
+    cuteHelper.classList.add("is-visible");
+
+    clearTimeout(helperTimer);
+
+    helperTimer = setTimeout(function () {
+      cuteHelper.classList.remove("is-visible");
+    }, 1200);
+  }
+
   cuteButtons.forEach(function (button) {
+
+    /* Desktop */
     button.addEventListener("mouseenter", function () {
-      var rect = button.getBoundingClientRect();
-
-      cuteHelper.style.left =
-        rect.left + rect.width / 2 - 15 + "px";
-
-      cuteHelper.style.top =
-        rect.top - 48 + "px";
-
-      cuteHelper.classList.add("is-visible");
+      showCuteHelper(button);
     });
 
     button.addEventListener("mouseleave", function () {
+      clearTimeout(helperTimer);
       cuteHelper.classList.remove("is-visible");
     });
+
+    /* Mobile / touch */
+    button.addEventListener("touchstart", function () {
+      showCuteHelper(button);
+    }, { passive: true });
+
   });
+}
 }
   }
 })();
