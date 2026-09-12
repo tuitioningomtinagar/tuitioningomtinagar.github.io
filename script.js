@@ -318,5 +318,32 @@
         }
       });
     });
+     /* ---------- Cute stick-man button helper ---------- */
+
+var cuteHelper = document.querySelector(".cute-helper");
+
+if (cuteHelper) {
+  var cuteButtons = document.querySelectorAll(
+    "button, .btn, .social-link"
+  );
+
+  cuteButtons.forEach(function (button) {
+    button.addEventListener("mouseenter", function () {
+      var rect = button.getBoundingClientRect();
+
+      cuteHelper.style.left =
+        rect.left + rect.width / 2 - 15 + "px";
+
+      cuteHelper.style.top =
+        rect.top - 48 + "px";
+
+      cuteHelper.classList.add("is-visible");
+    });
+
+    button.addEventListener("mouseleave", function () {
+      cuteHelper.classList.remove("is-visible");
+    });
+  });
+}
   }
 })();
