@@ -1738,5 +1738,8 @@ textarea:focus-visible,
   }
 
 }
+footer .logo-text {
+  color: #fff !important;
+}
 
 
