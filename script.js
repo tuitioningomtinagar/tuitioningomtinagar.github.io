@@ -330,22 +330,24 @@ if (cuteHelper) {
   var helperTimer;
 
   function showCuteHelper(button) {
-    var rect = button.getBoundingClientRect();
+  var rect = button.getBoundingClientRect();
 
-    cuteHelper.style.left =
-      rect.left + rect.width / 2 - 15 + "px";
+  /* Put the character directly over the button */
+  cuteHelper.style.left =
+    rect.left + rect.width / 2 - 15 + "px";
 
-    cuteHelper.style.top =
-      rect.top - 48 + "px";
+  cuteHelper.style.top =
+    rect.top - 5 + "px";
 
-    cuteHelper.classList.add("is-visible");
+  cuteHelper.classList.add("is-visible");
 
-    clearTimeout(helperTimer);
+  clearTimeout(helperTimer);
 
-    helperTimer = setTimeout(function () {
-      cuteHelper.classList.remove("is-visible");
-    }, 1200);
-  }
+  helperTimer = setTimeout(function () {
+    cuteHelper.classList.remove("is-visible");
+  }, 900);
+}
+
 
   cuteButtons.forEach(function (button) {
 
