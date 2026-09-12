@@ -139,16 +139,24 @@
   }
 
   /* ---------- FAQ accordion ---------- */
+   console.log("FAQ SCRIPT REACHED");
+
   document.querySelectorAll(".faq-trigger").forEach(function (trigger) {
-    trigger.addEventListener("click", function () {
-      var expanded = trigger.getAttribute("aria-expanded") === "true";
-      var item = trigger.closest(".faq-item");
-      trigger.setAttribute("aria-expanded", String(!expanded));
-      if (item) {
-        item.classList.toggle("is-open", !expanded);
-      }
-    });
+  console.log("FAQ BUTTON FOUND", trigger);
+
+  trigger.addEventListener("click", function () {
+    console.log("FAQ CLICKED");
+
+    var expanded = trigger.getAttribute("aria-expanded") === "true";
+    var item = trigger.closest(".faq-item");
+
+    trigger.setAttribute("aria-expanded", String(!expanded));
+
+    if (item) {
+      item.classList.toggle("is-open", !expanded);
+    }
   });
+});
 
   /* ---------- Enquiry form validation + mailto fallback ---------- */
   var form = document.getElementById("enquiryForm");
