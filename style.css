@@ -1743,6 +1743,129 @@ textarea:focus-visible,
 footer .logo-text {
   color: #fff !important;
 }
+/* =========================================================
+   CUTE STICK-MAN BUTTON HELPER
+   ========================================================= */
+
+.cute-helper {
+  position: fixed;
+  width: 30px;
+  height: 45px;
+  z-index: 9999;
+  pointer-events: none;
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.8);
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s ease;
+
+  display: none;
+}
+
+/* Head */
+.helper-head {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #172554;
+  border-radius: 50%;
+  background: #fff;
+  left: 9px;
+  top: 0;
+}
+
+/* Body */
+.helper-body {
+  position: absolute;
+  width: 2px;
+  height: 17px;
+  background: #172554;
+  left: 14px;
+  top: 12px;
+  border-radius: 2px;
+}
+
+/* Arms */
+.helper-arm {
+  position: absolute;
+  width: 13px;
+  height: 2px;
+  background: #172554;
+  top: 16px;
+  border-radius: 2px;
+  transform-origin: left center;
+}
+
+.helper-arm-left {
+  left: 2px;
+  transform: rotate(25deg);
+}
+
+.helper-arm-right {
+  left: 14px;
+  transform: rotate(-55deg);
+}
+
+/* Legs */
+.helper-leg {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background: #172554;
+  top: 28px;
+  border-radius: 2px;
+  transform-origin: left center;
+}
+
+.helper-leg-left {
+  left: 14px;
+  transform: rotate(125deg);
+}
+
+.helper-leg-right {
+  left: 14px;
+  transform: rotate(55deg);
+}
+
+/* Wave animation */
+@keyframes helperWave {
+  from {
+    transform: rotate(-55deg);
+  }
+
+  to {
+    transform: rotate(-25deg);
+  }
+}
+
+@keyframes helperBounce {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  to {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+.cute-helper.is-visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: helperBounce 0.45s ease-in-out infinite alternate;
+}
+
+.cute-helper.is-visible .helper-arm-right {
+  animation: helperWave 0.45s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cute-helper.is-visible,
+  .cute-helper.is-visible .helper-arm-right {
+    animation: none;
+  }
+}
 
 
 
