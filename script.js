@@ -318,6 +318,7 @@
         }
       });
     });
+  }
     /* ---------- Cute stick-man button helper ---------- */
 
 var cuteHelper = document.querySelector(".cute-helper");
