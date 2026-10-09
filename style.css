@@ -310,14 +310,14 @@ p {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.btn-whatsapp {
-  background: var(--color-teal);
+.btn-call {
+  background: #F04405;
   color: var(--color-white);
 }
 
-.btn-whatsapp:hover,
-.btn-whatsapp:focus-visible {
-  background: var(--color-teal-dark);
+.btn-call:hover,
+.btn-call:focus-visible {
+  background: #D93D04;
   box-shadow: var(--shadow-md);
 }
 
