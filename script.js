@@ -159,166 +159,65 @@
 });
 
   /* ---------- Enquiry form validation + mailto fallback ---------- */
-  var form = document.getElementById("enquiryForm");
-  var statusBox = document.getElementById("formStatus");
+ 
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyzrCocgpeSSwR4SzcyI8PodBnEDCutYTtFTmpSxkaz7muKNBFKK4VaYKKbQs-ooSKU4w/exec";
 
-  function setError(field, message) {
-    var errorEl = document.getElementById(field.id + "-error");
-    if (errorEl) {
-      errorEl.textContent = message || "";
-    }
-    if (message) {
-      field.setAttribute("aria-invalid", "true");
-    } else {
-      field.removeAttribute("aria-invalid");
-    }
+const form = document.getElementById("enquiryForm");
+const status = document.getElementById("formStatus");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  status.textContent = "";
+
+  // Use the existing HTML validation
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
   }
 
-  function showStatus(message, type) {
-    if (!statusBox) return;
-    statusBox.textContent = message;
-    statusBox.className = "form-status is-visible " + type;
-  }
+  const data = Object.fromEntries(
+    new FormData(form).entries()
+  );
 
-  function isValidPhone(value) {
-    return /^[6-9]\d{9}$/.test(value.replace(/\D/g, "").slice(-10));
-  }
+  const button = form.querySelector(
+    'button[type="submit"]'
+  );
 
-  function isValidEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  }
+  button.disabled = true;
+  status.textContent = "Submitting your enquiry...";
 
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var valid = true;
-      var firstInvalid = null;
-
-      var name = form.querySelector("#parentName");
-      var phone = form.querySelector("#phone");
-      var email = form.querySelector("#email");
-      var studentClass = form.querySelector("#studentClass");
-      var area = form.querySelector("#area");
-      var message = form.querySelector("#message");
-      var subject = form.querySelector("#subject");
-      var board = form.querySelector("#board");
-      var timing = form.querySelector("#timing");
-
-      // Name
-      if (!name.value.trim()) {
-        setError(name, "Please enter a name.");
-        valid = false;
-        firstInvalid = firstInvalid || name;
-      } else {
-        setError(name, "");
-      }
-
-      // Phone
-      if (!phone.value.trim()) {
-        setError(phone, "Please enter a phone number.");
-        valid = false;
-        firstInvalid = firstInvalid || phone;
-      } else if (!isValidPhone(phone.value)) {
-        setError(phone, "Please enter a valid 10-digit mobile number.");
-        valid = false;
-        firstInvalid = firstInvalid || phone;
-      } else {
-        setError(phone, "");
-      }
-
-      // Email (optional, validated only if filled)
-      if (email.value.trim() && !isValidEmail(email.value.trim())) {
-        setError(email, "Please enter a valid email address.");
-        valid = false;
-        firstInvalid = firstInvalid || email;
-      } else {
-        setError(email, "");
-      }
-
-      // Class
-      if (!studentClass.value) {
-        setError(studentClass, "Please select a class.");
-        valid = false;
-        firstInvalid = firstInvalid || studentClass;
-      } else {
-        setError(studentClass, "");
-      }
-
-      // Area
-      if (!area.value) {
-        setError(area, "Please select an area.");
-        valid = false;
-        firstInvalid = firstInvalid || area;
-      } else {
-        setError(area, "");
-      }
-
-      // Message
-      if (!message.value.trim()) {
-        setError(message, "Please add a short message.");
-        valid = false;
-        firstInvalid = firstInvalid || message;
-      } else {
-        setError(message, "");
-      }
-
-      if (!valid) {
-        showStatus(
-          "Please check the highlighted fields and try again.",
-          "error"
-        );
-        if (firstInvalid) {
-          firstInvalid.focus();
-        }
-        return;
-      }
-
-      // Build a mailto link with the enquiry details.
-      // This site has no backend, so this hands the message to the
-      // user's own email app rather than pretending to send it directly.
-      var lines = [
-        "New home tuition enquiry from the website:",
-        "",
-        "Name: " + name.value.trim(),
-        "Phone: " + phone.value.trim(),
-        "Email: " + (email.value.trim() || "Not provided"),
-        "Class: " + studentClass.value,
-        "Subject(s): " + (subject.value.trim() || "Not specified"),
-        "School Board: " + (board.value.trim() || "Not specified"),
-        "Preferred Timing: " + (timing.value.trim() || "Not specified"),
-        "Area / Location: " + area.value,
-        "",
-        "Message:",
-        message.value.trim(),
-      ];
-
-      var mailSubject = encodeURIComponent(
-        "Home Tuition Enquiry — " + name.value.trim()
-      );
-      var mailBody = encodeURIComponent(lines.join("\n"));
-      var mailtoLink =
-        "mailto:lotstudyindia@gmail.com?subject=" +
-        mailSubject +
-        "&body=" +
-        mailBody;
-
-      window.location.href = mailtoLink;
-
-      showStatus(
-        "Opening your email app with the enquiry details — please hit send. You can also reach us directly by call or WhatsApp.",
-        "success"
-      );
+  try {
+    // text/plain avoids a JSON CORS preflight.
+    // no-cors means the response cannot be read here.
+    await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(data)
     });
 
-    // Clear individual field errors as the user corrects them
-    form.querySelectorAll("input, select, textarea").forEach(function (field) {
-      field.addEventListener("input", function () {
-        if (field.getAttribute("aria-invalid") === "true") {
-          setError(field, "");
-        }
-      });
-    });
+    status.textContent =
+      "Your enquiry request has been sent. " +
+      "Please contact us directly if you do not receive a response.";
+
+    form.reset();
+
+  } catch (error) {
+    status.textContent =
+      "We could not submit your enquiry. " +
+      "Please call or WhatsApp us directly.";
+
+    console.error("Enquiry submission error:", error);
+
+  } finally {
+    button.disabled = false;
   }
+});
+
     /* ---------- Cute stick-man button helper ---------- */
 
 var cuteHelper = document.querySelector(".cute-helper");
