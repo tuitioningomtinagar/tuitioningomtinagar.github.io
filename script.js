@@ -160,62 +160,72 @@
 
   /* ---------- Enquiry form validation + mailto fallback ---------- */
  
-const SCRIPT_URL ="https://script.google.com/macros/s/AKfycbyzrCocgpeSSwR4SzcyI8PodBnEDCutYTtFTmpSxkaz7muKNBFKK4VaYKKbQs-ooSKU4w/exec";
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyzrCocgpeSSwR4zcyI8PodBnEDCutYTtFTmpSxkaz7muKNBFKK4VaYKKbQs-ooSKU4w/exec";
 
 const form = document.getElementById("enquiryForm");
-const status = document.getElementById("formStatus");
+const statusBox = document.getElementById("formStatus");
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+if (form && statusBox) {
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-  status.textContent = "";
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-  // Use the existing HTML validation
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
+    const getValue = (selector) =>
+      form.querySelector(selector)?.value.trim() || "";
 
-  const data = Object.fromEntries(
-    new FormData(form).entries()
-  );
+    const data = {
+      parentName: getValue("#parentName"),
+      phone: getValue("#phone"),
+      email: getValue("#email"),
+      studentClass: getValue("#studentClass"),
+      subject: getValue("#subject"),
+      board: getValue("#board"),
+      timing: getValue("#timing"),
+      area: getValue("#area"),
+      message: getValue("#message")
+    };
 
-  const button = form.querySelector(
-    'button[type="submit"]'
-  );
+    const button = form.querySelector(
+      'button[type="submit"]'
+    );
 
-  button.disabled = true;
-  status.textContent = "Submitting your enquiry...";
+    if (button) button.disabled = true;
 
-  try {
-    // text/plain avoids a JSON CORS preflight.
-    // no-cors means the response cannot be read here.
-    await fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
-      body: JSON.stringify(data)
-    });
+    statusBox.textContent = "Submitting your enquiry...";
 
-    status.textContent =
-      "Your enquiry request has been sent. " +
-      "Please contact us directly if you do not receive a response.";
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(data)
+      });
 
-    form.reset();
+      statusBox.textContent =
+        "Your request was submitted. Please contact us directly if you do not receive a response.";
 
-  } catch (error) {
-    status.textContent =
-      "We could not submit your enquiry. " +
-      "Please call or WhatsApp us directly.";
+      form.reset();
 
-    console.error("Enquiry submission error:", error);
+    } catch (error) {
+      console.error("Enquiry submission error:", error);
 
-  } finally {
-    button.disabled = false;
-  }
-});
+      statusBox.textContent =
+        "Submission failed. Please call or WhatsApp us directly.";
+
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+}
+
 
     /* ---------- Cute stick-man button helper ---------- */
 
