@@ -160,8 +160,7 @@
 
   /* ---------- Enquiry form validation + mailto fallback ---------- */
  
-const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyzrCocgpeSSwR4SzcyI8PodBnEDCutYTtFTmpSxkaz7muKNBFKK4VaYKKbQs-ooSKU4w/exec";
+const SCRIPT_URL ="https://script.google.com/macros/s/AKfycbyzrCocgpeSSwR4SzcyI8PodBnEDCutYTtFTmpSxkaz7muKNBFKK4VaYKKbQs-ooSKU4w/exec";
 
 const form = document.getElementById("enquiryForm");
 const status = document.getElementById("formStatus");
