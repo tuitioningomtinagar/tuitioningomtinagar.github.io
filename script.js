@@ -200,26 +200,29 @@ if (form && statusBox) {
     statusBox.textContent = "Submitting your enquiry...";
 
     try {
-      await fetch(SCRIPT_URL, {
+      const response = await fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
         body: JSON.stringify(data)
       });
 
-      statusBox.textContent =
-        "Your request was submitted. Please contact us directly if you do not receive a response.";
+      const result = await response.json();
 
-      form.reset();
+      if (result.success) {
+        statusBox.textContent =
+          "Your request was submitted! We will get back to you shortly.";
+        form.reset();
+      } else {
+        // Shows the exact server error (e.g., "Invalid phone number...")
+        statusBox.textContent = result.message || "Submission failed.";
+      }
 
     } catch (error) {
       console.error("Enquiry submission error:", error);
-
       statusBox.textContent =
         "Submission failed. Please call or WhatsApp us directly.";
-
     } finally {
       if (button) button.disabled = false;
     }
