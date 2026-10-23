@@ -718,4 +718,147 @@
   }
 
 }
+Css
+
+/* =========================================================
+   STUDY PLAN TABLE
+   ========================================================= */
+
+.study-plan-table {
+  margin: 35px 0 30px;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.study-plan-row {
+  display: grid;
+
+  grid-template-columns: 140px 1fr;
+
+  border-bottom: 1px solid var(--color-border);
+}
+
+.study-plan-row:last-child {
+  border-bottom: none;
+}
+
+.study-plan-row > div {
+  padding: 15px 18px;
+
+  color: var(--color-text-muted);
+
+  line-height: 1.6;
+}
+
+.study-plan-row > div:first-child {
+  font-weight: 700;
+
+  color: var(--color-navy);
+
+  background: #f8fafb;
+}
+
+.study-plan-heading > div {
+  font-weight: 700;
+
+  color: #ffffff !important;
+
+  background: var(--color-navy) !important;
+}
+/* =========================================================
+   RELATED ARTICLE
+   ========================================================= */
+
+.article-related {
+  margin-top: 55px;
+
+  padding-top: 30px;
+
+  border-top: 1px solid var(--color-border);
+}
+
+.article-related h2 {
+  margin-top: 0;
+
+  margin-bottom: 20px;
+
+  font-size: 1.4rem;
+}
+
+.related-article {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding: 22px 24px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--color-border);
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-sm);
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.related-article:hover {
+  transform: translateY(-3px);
+
+  box-shadow: var(--shadow-md);
+
+  border-color: rgba(22, 118, 110, 0.35);
+}
+
+.related-article strong {
+  color: var(--color-navy);
+
+  font-size: 1.05rem;
+
+  line-height: 1.45;
+}
+
+.related-article span {
+  color: var(--color-text-muted);
+
+  font-size: 0.92rem;
+
+  line-height: 1.6;
+}
+
+/* =========================================================
+   MOBILE STUDY TABLE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .study-plan-row {
+    grid-template-columns: 1fr;
+  }
+
+  .study-plan-row > div:first-child {
+    padding-bottom: 5px;
+  }
+
+  .study-plan-row > div:last-child {
+    padding-top: 5px;
+  }
+
+}
 
