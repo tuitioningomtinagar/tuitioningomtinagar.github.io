@@ -258,7 +258,33 @@ if (cuteHelper) {
     cuteHelper.classList.remove("is-visible");
   }, 900);
 }
+document.addEventListener("DOMContentLoaded", function () {
 
+  const menuToggle = document.getElementById("gteMenuToggle");
+  const navigation = document.getElementById("gteNavigation");
+
+  if (!menuToggle || !navigation) return;
+
+  menuToggle.addEventListener("click", function () {
+
+    const isOpen = navigation.classList.toggle("active");
+
+    menuToggle.setAttribute("aria-expanded", isOpen);
+
+  });
+
+  navigation.querySelectorAll("a").forEach(function (link) {
+
+    link.addEventListener("click", function () {
+
+      navigation.classList.remove("active");
+      menuToggle.setAttribute("aria-expanded", "false");
+
+    });
+
+  });
+
+});
 
   cuteButtons.forEach(function (button) {
 
